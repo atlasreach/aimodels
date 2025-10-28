@@ -19,18 +19,25 @@ NUM_VARIATIONS = 5  # TEST: Quick 5-image run
 STRENGTH = 0.8  # TEST: High strength for more variation
 RESOLUTION = 1024
 STEPS = 30
-GUIDANCE = 7.5
+GUIDANCE = 6.0  # Reduced for more creative freedom (was 7.5)
 
-# Prompts for variations
+# Prompts for REAL variations - diverse scenarios and contexts
 PROMPTS = [
-    "beautiful woman portrait, natural lighting, high quality, professional photography",
-    "portrait of a woman, soft lighting, detailed face, photorealistic",
-    "beautiful female face, cinematic lighting, 8k uhd, sharp focus",
-    "woman headshot, studio lighting, professional photo, elegant",
-    "elegant woman portrait, natural beauty, high resolution, detailed",
-    "beautiful woman, perfect skin, natural makeup, soft light",
-    "portrait photography, woman, soft focus background, professional",
-    "professional headshot, woman, neutral background, high quality",
+    "woman at outdoor cafe, golden hour sunlight, candid shot, bokeh background",
+    "professional headshot, white background, studio lighting, business attire",
+    "woman laughing, colorful urban street background, natural daylight, casual style",
+    "close-up portrait, dramatic side lighting, dark moody background, film noir aesthetic",
+    "woman in nature, soft morning light, trees in background, peaceful expression",
+    "beach portrait, sunset lighting, ocean in background, windswept hair, relaxed",
+    "indoor home setting, window light, cozy atmosphere, soft smile, warm tones",
+    "nighttime city lights background, bokeh, cool blue tones, elegant evening look",
+    "gym/fitness setting, energetic pose, bright lighting, athletic wear, determined expression",
+    "art gallery background, sophisticated look, neutral tones, cultural setting",
+    "coffee shop interior, casual candid moment, warm lighting, relaxed posture",
+    "park bench, autumn leaves background, natural light, contemplative mood",
+    "modern office background, professional setting, natural window light, confident pose",
+    "library/bookstore background, intellectual vibe, soft lighting, thoughtful expression",
+    "rooftop terrace, cityscape background, golden hour, stylish casual outfit",
 ]
 
 def main():
