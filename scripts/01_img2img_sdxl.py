@@ -2,7 +2,7 @@
 """
 SDXL Base - Face Variation Generator
 Model: stabilityai/stable-diffusion-xl-base-1.0
-Generates 25 test variations for comparison
+TEST MODE: 5 images with strength=0.8 for high variation testing
 """
 import os
 import torch
@@ -15,8 +15,8 @@ import random
 MODEL_NAME = "stabilityai/stable-diffusion-xl-base-1.0"
 SOURCE_IMAGE = "source/bella_face_source.jpg"
 OUTPUT_DIR = "datasets/sdxl_base"
-NUM_VARIATIONS = 25
-STRENGTH = 0.3
+NUM_VARIATIONS = 5  # TEST: Quick 5-image run
+STRENGTH = 0.8  # TEST: High strength for more variation
 RESOLUTION = 1024
 STEPS = 30
 GUIDANCE = 7.5
@@ -120,11 +120,17 @@ def main():
     print("-" * 70)
     print()
     print("=" * 70)
-    print("✓ SDXL BASE GENERATION COMPLETE!")
-    print(f"✓ Generated: {NUM_VARIATIONS} variations")
+    print("✓ TEST COMPLETE - SDXL BASE WITH STRENGTH=0.8")
+    print(f"✓ Generated: {NUM_VARIATIONS} test variations")
     print(f"✓ Total time: {total_time/60:.1f} minutes")
     print(f"✓ Avg per image: {total_time/NUM_VARIATIONS:.1f} seconds")
     print(f"✓ Location: {OUTPUT_DIR}/")
+    print()
+    print("NEXT STEPS:")
+    print("  1. Review images in datasets/sdxl_base/")
+    print("  2. Check for variation in faces, backgrounds, lighting")
+    print("  3. If good: run full 25-image test or train LoRA")
+    print("  4. If too different: reduce strength to 0.5-0.6")
     print("=" * 70)
 
 if __name__ == "__main__":
