@@ -1,0 +1,143 @@
+================================================================================
+BELLA AI - MODEL COMPARISON REPORT
+================================================================================
+
+Generated: 2025-10-28 21:18:40
+
+SUMMARY - ALL MODELS
+--------------------------------------------------------------------------------
+Model                     Total    Valid    Corrupted  Success % 
+--------------------------------------------------------------------------------
+SDXL Base                 25       25       0             100.0%
+Realistic Vision V5.1     25       25       0             100.0%
+Juggernaut XL             25       25       0             100.0%
+SD 1.5 Baseline           25       25       0             100.0%
+--------------------------------------------------------------------------------
+
+
+================================================================================
+MODEL: SDXL Base
+================================================================================
+Location: datasets/sdxl_base
+
+STATISTICS
+--------------------------------------------------------------------------------
+  Total images:        25
+  Valid images:        25
+  Corrupted images:    0
+  Success rate:        100.0%
+
+RESOLUTIONS
+--------------------------------------------------------------------------------
+  1024x1024       :   25 images (100.0%)
+
+FILE SIZES
+--------------------------------------------------------------------------------
+  Average size:        0.13 MB
+  Minimum size:        0.13 MB
+  Maximum size:        0.14 MB
+  Total dataset size:  3.32 MB
+
+
+================================================================================
+MODEL: Realistic Vision V5.1
+================================================================================
+Location: datasets/realistic_vision
+
+STATISTICS
+--------------------------------------------------------------------------------
+  Total images:        25
+  Valid images:        25
+  Corrupted images:    0
+  Success rate:        100.0%
+
+RESOLUTIONS
+--------------------------------------------------------------------------------
+  512x512         :   25 images (100.0%)
+
+FILE SIZES
+--------------------------------------------------------------------------------
+  Average size:        0.04 MB
+  Minimum size:        0.04 MB
+  Maximum size:        0.04 MB
+  Total dataset size:  1.08 MB
+
+
+================================================================================
+MODEL: Juggernaut XL
+================================================================================
+Location: datasets/juggernaut_xl
+
+STATISTICS
+--------------------------------------------------------------------------------
+  Total images:        25
+  Valid images:        25
+  Corrupted images:    0
+  Success rate:        100.0%
+
+RESOLUTIONS
+--------------------------------------------------------------------------------
+  1024x1024       :   25 images (100.0%)
+
+FILE SIZES
+--------------------------------------------------------------------------------
+  Average size:        0.13 MB
+  Minimum size:        0.12 MB
+  Maximum size:        0.13 MB
+  Total dataset size:  3.17 MB
+
+
+================================================================================
+MODEL: SD 1.5 Baseline
+================================================================================
+Location: datasets/sd15
+
+STATISTICS
+--------------------------------------------------------------------------------
+  Total images:        25
+  Valid images:        25
+  Corrupted images:    0
+  Success rate:        100.0%
+
+RESOLUTIONS
+--------------------------------------------------------------------------------
+  512x512         :   25 images (100.0%)
+
+FILE SIZES
+--------------------------------------------------------------------------------
+  Average size:        0.05 MB
+  Minimum size:        0.05 MB
+  Maximum size:        0.06 MB
+  Total dataset size:  1.32 MB
+
+
+================================================================================
+COMPARISON SUMMARY
+================================================================================
+
+✓ Most images generated:  SDXL Base (25 images)
+✓ Largest avg file size:  SDXL Base (0.13 MB)
+
+Resolution breakdown:
+  SDXL Base                 : 1024x1024 (most common)
+  Realistic Vision V5.1     : 512x512 (most common)
+  Juggernaut XL             : 1024x1024 (most common)
+  SD 1.5 Baseline           : 512x512 (most common)
+
+================================================================================
+RECOMMENDATIONS
+================================================================================
+
+Based on generation metrics:
+  • SDXL Base: Good balance of quality and consistency
+  • Realistic Vision V5.1: Best for photorealistic faces (512x512)
+  • Juggernaut XL: Excellent for consistent facial details (1024x1024)
+  • SD 1.5: Fastest but lower quality baseline
+
+Next steps:
+  1. Review generated images manually in each dataset folder
+  2. Choose best model based on visual quality
+  3. Use chosen model to generate full 100+ image dataset
+  4. Proceed with LoRA training on best dataset
+
+================================================================================
