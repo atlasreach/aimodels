@@ -15,7 +15,7 @@ import random
 MODEL_NAME = "stabilityai/stable-diffusion-xl-base-1.0"
 SOURCE_IMAGE = "source/bella_face_source.jpg"
 OUTPUT_DIR = "datasets/sdxl_base"
-NUM_VARIATIONS = 5  # TEST: Quick 5-image run
+NUM_VARIATIONS = 3  # TEST: Quick 3-image run
 STRENGTH = 0.8  # TEST: High strength for more variation
 RESOLUTION = 1024
 STEPS = 30
