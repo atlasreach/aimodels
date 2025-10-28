@@ -18,15 +18,26 @@ aimodels/
 ├── source/
 │   └── bella_face_source.jpg          # Original source face image
 ├── datasets/
-│   ├── bella_face_aug/                # 100+ augmented face variations
+│   ├── bella_face_aug/                # 100+ augmented face variations (original)
+│   ├── sdxl_base/                     # SDXL Base test outputs (25 images)
+│   ├── realistic_vision/              # Realistic Vision V5.1 test outputs
+│   ├── juggernaut_xl/                 # Juggernaut XL test outputs
+│   ├── sd15/                          # SD 1.5 baseline test outputs
 │   └── bella_body_cropped/            # Future: body images for face swap
 ├── loras/
 │   └── bella_face.safetensors         # Trained LoRA model
 ├── generated/
 │   ├── test_swaps/                    # Test outputs
 │   └── verification_report.txt        # Dataset quality report
+├── reports/
+│   └── model_comparison.txt           # Model comparison analysis
 ├── scripts/
-│   ├── 01_img2img.py                  # Generate face variations
+│   ├── 01_img2img.py                  # Original: Generate 100 variations (SDXL Refiner)
+│   ├── 01_img2img_sdxl.py             # NEW: SDXL Base test (25 variations)
+│   ├── 02_img2img_realistic.py        # NEW: Realistic Vision test
+│   ├── 03_img2img_juggernaut.py       # NEW: Juggernaut XL test
+│   ├── 04_img2img_sd15.py             # NEW: SD 1.5 baseline test
+│   ├── 05_verify_compare.py           # NEW: Compare all models
 │   ├── 02_train_lora.sh               # Train LoRA model
 │   └── 03_verify_images.py            # Verify dataset integrity
 └── README.md
@@ -108,6 +119,88 @@ cp loras/bella_face.safetensors /path/to/stable-diffusion-webui/models/Lora/
 ```
 
 Adjust the weight (0.0-1.0) to control how strongly the LoRA affects generation.
+
+---
+
+## Model Comparison Testing (NEW!)
+
+Before committing to 100+ images with one model, test multiple models with 25 variations each to find the best fit for Bella's face.
+
+### Available Models for Testing
+
+| Model | Script | Resolution | Specialty | Speed |
+|-------|--------|------------|-----------|-------|
+| **SDXL Base** | `01_img2img_sdxl.py` | 1024x1024 | Balanced quality/consistency | Medium |
+| **Realistic Vision V5.1** | `02_img2img_realistic.py` | 512x512 | Photorealistic faces | Fast |
+| **Juggernaut XL** | `03_img2img_juggernaut.py` | 1024x1024 | Consistent details | Medium |
+| **SD 1.5 Baseline** | `04_img2img_sd15.py` | 512x512 | Fast baseline | Fastest |
+
+### Run Model Comparison Tests
+
+**Option A: Run All Models Sequentially**
+```bash
+# On RunPod (after git pull)
+cd /workspace/aimodels
+
+# Run all 4 models (takes ~10-15 mins on RTX 4090)
+python scripts/01_img2img_sdxl.py
+python scripts/02_img2img_realistic.py
+python scripts/03_img2img_juggernaut.py
+python scripts/04_img2img_sd15.py
+
+# Verify and compare results
+python scripts/05_verify_compare.py
+```
+
+**Option B: Run One at a Time**
+```bash
+# Test SDXL Base first
+python scripts/01_img2img_sdxl.py
+
+# Check output
+ls datasets/sdxl_base/
+
+# If good, continue with others...
+```
+
+### Compare Results
+
+After running tests:
+
+```bash
+# View comparison report
+cat reports/model_comparison.txt
+
+# Manually review images in each folder
+ls datasets/sdxl_base/
+ls datasets/realistic_vision/
+ls datasets/juggernaut_xl/
+ls datasets/sd15/
+```
+
+**The report includes:**
+- Image counts per model
+- File sizes and resolutions
+- Corruption checks
+- Side-by-side statistics
+- Recommendations
+
+### Choose Your Model
+
+Based on results:
+
+1. **Best visual quality?** → Use that model for full 100+ generation
+2. **Most consistent?** → Prioritize for LoRA training
+3. **Fastest with good results?** → Good for iteration
+
+**Example: Once you choose Juggernaut XL as best:**
+```bash
+# Modify the original script to use Juggernaut
+# Or regenerate 100 images with:
+# python scripts/03_img2img_juggernaut.py (edit NUM_VARIATIONS=100)
+```
+
+---
 
 ## Training Configuration
 
