@@ -58,21 +58,25 @@ git clone https://github.com/bmaltais/kohya_ss.git
 cd kohya_ss && pip install -r requirements.txt
 ```
 
-### Step 1: Generate Face Variations
+### Step 1: Test Models & Choose Best (RECOMMENDED START HERE!)
 
-Generate 100 augmented face images from the source:
+**⚠️ IMPORTANT**: The original `01_img2img.py` uses SDXL Refiner (meant for upscaling, not variations). **Skip it** and use the model comparison scripts instead!
+
+**Test 4 models with 25 images each to find the best:**
 
 ```bash
-python scripts/01_img2img.py
+# On RunPod GPU - Run all 4 models (~10-15 mins total)
+cd /workspace/aimodels
+
+python scripts/01_img2img_sdxl.py          # SDXL Base - balanced
+python scripts/02_img2img_realistic.py     # Realistic Vision - photoreal
+python scripts/03_img2img_juggernaut.py    # Juggernaut XL - consistent
+python scripts/04_img2img_sd15.py          # SD 1.5 - fast baseline
 ```
 
-This will:
-- Load `source/bella_face_source.jpg`
-- Use SDXL img2img to create variations
-- Save 100 images to `datasets/bella_face_aug/`
-- Show progress during generation
+**Expected output**: 25 varied images per model with different backgrounds, lighting, and expressions
 
-**Expected output**: 100 face variations (~1-2 hours on GPU)
+**Want to run them in parallel? See "Run Multiple Models at Once" section below.**
 
 ### Step 2: Verify Dataset
 
@@ -137,12 +141,51 @@ Before committing to 100+ images with one model, test multiple models with 25 va
 
 ### Run Model Comparison Tests
 
-**Option A: Run All Models Sequentially**
+**Option A: Run All Models in Parallel (FASTEST - 3-5 mins!)**
+
+Your RTX 4090 has 24GB VRAM - run multiple models at once:
+
 ```bash
-# On RunPod (after git pull)
+# On RunPod - Open 4 terminal tabs (or use tmux/screen)
 cd /workspace/aimodels
 
-# Run all 4 models (takes ~10-15 mins on RTX 4090)
+# Terminal 1:
+python scripts/01_img2img_sdxl.py &
+
+# Terminal 2:
+python scripts/02_img2img_realistic.py &
+
+# Terminal 3:
+python scripts/03_img2img_juggernaut.py &
+
+# Terminal 4:
+python scripts/04_img2img_sd15.py &
+
+# Wait for all to finish (monitor with: jobs)
+wait
+
+# Verify and compare results
+python scripts/05_verify_compare.py
+```
+
+**Or run 2 at once (safer for VRAM):**
+```bash
+# Run the two XL models first (heavier)
+python scripts/01_img2img_sdxl.py & python scripts/03_img2img_juggernaut.py & wait
+
+# Then run the two 1.5 models (lighter)
+python scripts/02_img2img_realistic.py & python scripts/04_img2img_sd15.py & wait
+
+# Compare
+python scripts/05_verify_compare.py
+```
+
+**Option B: Run All Models Sequentially (SAFEST - 10-15 mins)**
+```bash
+# On RunPod
+cd /workspace/aimodels
+
+# One after another
 python scripts/01_img2img_sdxl.py
 python scripts/02_img2img_realistic.py
 python scripts/03_img2img_juggernaut.py
@@ -152,7 +195,7 @@ python scripts/04_img2img_sd15.py
 python scripts/05_verify_compare.py
 ```
 
-**Option B: Run One at a Time**
+**Option C: Run One at a Time**
 ```bash
 # Test SDXL Base first
 python scripts/01_img2img_sdxl.py
