@@ -16,10 +16,13 @@ MODEL_NAME = "stabilityai/stable-diffusion-xl-base-1.0"
 SOURCE_IMAGE = "source/bella_face_source.jpg"
 OUTPUT_DIR = "datasets/sdxl_base"
 NUM_VARIATIONS = 3  # TEST: Quick 3-image run
-STRENGTH = 0.8  # TEST: High strength for more variation
+STRENGTH = 0.5  # FIXED: Preserve face identity (was 0.8)
 RESOLUTION = 1024
 STEPS = 30
-GUIDANCE = 6.0  # Reduced for more creative freedom (was 7.5)
+GUIDANCE = 7.5  # FIXED: Follow prompts better (was 6.0)
+
+# Negative prompt to preserve face identity
+NEGATIVE_PROMPT = "ugly, deformed, distorted face, blurry, low quality, mutated, disfigured, bad anatomy, extra limbs"
 
 # Prompts for REAL variations - diverse scenarios and contexts
 PROMPTS = [
@@ -102,6 +105,7 @@ def main():
 
             result = pipe(
                 prompt=prompt,
+                negative_prompt=NEGATIVE_PROMPT,
                 image=source_img,
                 strength=STRENGTH,
                 num_inference_steps=STEPS,
@@ -127,17 +131,19 @@ def main():
     print("-" * 70)
     print()
     print("=" * 70)
-    print("✓ TEST COMPLETE - SDXL BASE WITH STRENGTH=0.8")
+    print("✓ TEST COMPLETE - FACE-LOCKED VARIATIONS")
     print(f"✓ Generated: {NUM_VARIATIONS} test variations")
+    print(f"✓ Settings: strength={STRENGTH}, guidance={GUIDANCE}")
     print(f"✓ Total time: {total_time/60:.1f} minutes")
     print(f"✓ Avg per image: {total_time/NUM_VARIATIONS:.1f} seconds")
     print(f"✓ Location: {OUTPUT_DIR}/")
     print()
-    print("NEXT STEPS:")
-    print("  1. Review images in datasets/sdxl_base/")
-    print("  2. Check for variation in faces, backgrounds, lighting")
-    print("  3. If good: run full 25-image test or train LoRA")
-    print("  4. If too different: reduce strength to 0.5-0.6")
+    print("WHAT TO EXPECT:")
+    print("  ✓ Same face maintained (lower strength + negative prompt)")
+    print("  ✓ Different backgrounds/settings (diverse prompts)")
+    print("  ✓ Varied lighting and moods")
+    print()
+    print("NEXT: Review images, then run full batch or train LoRA")
     print("=" * 70)
 
 if __name__ == "__main__":
